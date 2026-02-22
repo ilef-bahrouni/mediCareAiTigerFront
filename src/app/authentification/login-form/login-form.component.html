@@ -1,0 +1,24 @@
+ <div class="form-content" id="loginForm">
+                <h2 class="form-title">Connexion Patient / Professionnel de Santé</h2>
+                <p class="form-subtitle">Bon retour parmi nous !</p>
+                <form [formGroup]="form">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control"  placeholder="Email ou Téléphone" 
+                        formControlName="username"  [class.error-msg]="
+              f['username'].invalid &&
+              (f['username'].dirty || f['username'].touched)
+            "
+          
+            >
+            <label for="loginIdentifier">Email ou Numéro de Téléphone</label></div>
+                    <div class="form-floating mb-3"><input type="password" class="form-control" placeholder="Password" formControlName="password" 
+               [class.error-msg]="
+              f['password'].invalid &&
+              (f['password'].dirty || f['password'].touched)
+            "><label for="loginPassword">Mot de passe</label></div>
+                    <p class="text-end mb-3">
+                        <a class="text-link" [routerLink]="['/auth/forgot/password']">Mot de passe oublié ?</a></p>
+                    <button type="submit" (click)="onSubmitlogin()" class="btn-submit  w-100 ws-100">Se Connecter</button>
+                </form>
+                <!-- <p class="back-link" id="backToChoiceFromLogin">← Retour au choix</p> -->
+            </div>

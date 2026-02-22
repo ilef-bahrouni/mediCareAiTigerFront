@@ -1,0 +1,117 @@
+<div class="modal-header">
+  <span class="ngbNavLink">
+    @if(modaltype ==='add'){
+          {{ "CLIENT.ADD" | translate }}
+
+    } @else {
+    {{ "CLIENT.EDIT" | translate }}
+    }
+  </span>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="dismissModal()"
+  ></button>
+</div>
+<div class="modal-body rotating-svg_client bg-client">
+  <form [formGroup]="ClientForm">
+    <div class="row">
+      <div class="container">
+        <div class="avatar-wrapper center-avatar justify-content-center">
+          <img
+            class="avatar_profil"
+            style="cursor: pointer"
+            [src]="photo"
+            alt="avatar image"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row modal-form m-1 p-4">
+      <div class="form-group col-6">
+        <label class="label_input">{{ "FORM.FIRSTNAME" | translate }}</label>
+        <input
+          type="text"
+          class="form-control input_style"
+          formControlName="firstName"
+          [class.error-msg]="
+            firstName?.invalid && (firstName?.dirty || firstName?.touched)
+          "
+          (blur)="changeValue('firstName')"
+        />
+      </div>
+
+      <div class="form-group col-6">
+        <label class="label_input"> {{ "FORM.LASTNAME" | translate }}</label>
+        <input
+          type="text"
+          class="form-control input_style"
+          formControlName="lastName"
+          [class.error-msg]="
+            lastName?.invalid && (lastName?.dirty || lastName?.touched)
+          "
+          (blur)="changeValue('lastName')"
+          placeholder="Charlene Reed "
+
+        />
+      </div>
+
+      <div class="form-group col-6">
+        <label class="label_input"> {{ "FORM.EMAIL" | translate }}</label>
+        <input
+          type="email"
+          class="form-control input_style"
+          id="exampleInputEmail1"
+          formControlName="email"
+          [class.error-msg]="email?.invalid && (email?.dirty || email?.touched)"
+          (blur)="changeValue('email')"
+          placeholder="charlenereed@gmail.com"
+        />
+      </div>
+      <div class="form-group col-6">
+        <label class="label_input">{{ "FORM.PHONE" | translate }}</label>
+      
+        <input
+          type="number"
+          class="form-control input_style"
+          formControlName="phoneNumber"
+          placeholder="+216 20600200"
+        />
+      </div>
+      <div class="form-group col-6">
+        <div class="mb-3">
+          <label class="label_input">{{ "FORM.BIRTHDAY" | translate }}</label>
+          <input
+            type="date"
+            class="form-control input_style"
+            formControlName="birthDate"
+          />
+        </div>
+      </div>
+     
+
+      <!-- <div class="form-group col-6">
+        <div class="mb-3">
+          <label class="label_input"> {{ "FORM.GENDER" | translate }}</label>
+
+          <select  required formControlName="gender"
+          class="form-select" aria-label="Default select example">
+            <option value="">{{ "FORM.SLECETGENDER" | translate }}</option>
+            <option value="M">👨 {{ "FORM.MALE" | translate }}</option>
+            <option value="F">👩 {{ "FORM.F" | translate }}</option>
+          </select>
+        </div>
+      </div> -->
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-reset" (click)="dismissModal()">
+    {{ "CANCEL" | translate }}
+  </button>
+  <button type="button" class="btn btn_submit" (click)="save()">
+    {{ "SAVE" | translate }}
+  </button>
+</div>

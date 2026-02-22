@@ -1,0 +1,8 @@
+{  "CLIENT": {
+    "TITLE": "Gestion des clients",
+    "TOTALCLIENTS": "Total des clients",
+    "ONLINE": "Clients en ligne",
+    "WORKING": "Clients en route",
+    "RECLAMATION": "Réclamation"
+}
+}

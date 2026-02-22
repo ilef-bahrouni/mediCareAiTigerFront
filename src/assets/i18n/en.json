@@ -1,0 +1,10 @@
+{
+    "CLIENT": {
+        "TITLE": "Client Management",
+        "TOTALCLIENTS": "Total Clients",
+        "ONLINE": "Clients Online",
+        "WORKING": "Clients in Transit",
+        "RECLAMATION": "Complaint"
+    }
+}
+      
