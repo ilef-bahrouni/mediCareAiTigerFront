@@ -4,7 +4,6 @@
     "TOTALCLIENTS": "Total des patients",
     "ONLINE": "Patients en ligne",
     "WORKING": "Patients en route",
-    "RECLAMATION": "Réclamation",
     "EDIT": "Modifier un patient ",
     "ADD": "Ajouter un Patient" , 
     "IMPORT":"Importer " , 
@@ -91,40 +90,14 @@
     "FACTURE":"Facture" 
 
   },
-  "SETTINGS": {
-    "TITLE": "Paramètres",
-    "ADDROLE": "Ajouter un rôle",
-    "ROLE": "Rôle",
-    "ON": "sur",
-    "ACTIVE": "activés",
-    "NODATA": "Pas des rôles ",
-    "SEARCH": "Rechercher ",
-    "PERMISSIONS": "Permissions",
-    "TITREMANAGMEROLE": "Rôles et permissions du personnel",
-    "SUBTITREMANAGMEROLE": "Gérer les permissions du personnel",
-    "SAVECHANGESPERMISSION": " Enregistrer les modifications de permissions .",
-    "ROLESUCCESADDES": "Rôle ajouter avec succès",
-    "ROLESUCCESEDIT": "Rôle modifier avec succès",
-    "ROLESUCCESDELETE": "Rôle supprimer avec succès",
-    "MODEVIEWING": "Mode consultation",
-    "ALLVIEWING": "Tous les fonctions",
-    "NAMESUBFUNCTION": "Nom de sous fonction",
-    "ADDSUBFUNCTION": "Ajouter une sous fonction",
-    "EDITSUBFUNCTION": "Modifier une sous fonction",
-    "EDITROLE": "Modifier un rôle"
-  },
+
   "TABSLIST": {
     "PERINFO": "Informations personnelles",
     "PROINFO": "Informations professionnelles",
-    "INV": "Facturation",
     "ADDRESS": "Adresse par defaut ",
-    "HISTORIQUE": "historique",
-    "CODEPRMO": "Code promo",
-    "SITES": "Sites",
-    "COLLABORATOR": "Collaborateurs" , 
-    "COMMENDE":"Commendes "
+    "HISTORIQUE": "historique"
   },
-  "AGENCY": {},
+ 
   "PAGINATOR": {
     "SHOWING": "Affichage",
     "RECORDS": "éléments",
@@ -132,53 +105,24 @@
     "OUTOF": "sur"
   },
   "TABLE": {
-    "ORDERS": "Commandes",
-    "LASTSEEN": "Dernière visite",
-    "TOTALSPENT": "Total dépensé",
-    "LASTORDER": "Dernière commande",
-    "NAMEBADGE": "Nom du badge",
-    "RANK": "Rank",
+   
     "DESCRIPTION": "Description",
     "NUM": "N°",
     "REF": "Référence",
     "STATUS": "Statut",
-    "GOLDENRESP": "Nom du Responsable",
-    "GOLDEN": "Partenaire",
     "TEL": "N° téléphone",
     "NAME": "Nom et prénom",
     "USERNAME": "Nom d'utilisateur",
     "ADRESS": "Adresse ",
-    "NAMEGOLDEN": "Nom Partenaire",
     "DATEINSCRIPTION": "Date d'inscription",
     "CREATIONDATE": "Date d'inscription",
     "ROLE": "Rôle",
     "REGION": "Région",
     "WEEK": "Semaine",
-    "REVENU": "Chiffre d’affaire",
-    "TOTALPRODUCT": "Nombre des produits",
-    "CREDIT": "Crédit",
-    "ECHEANCE": "Date d’échéance",
-    "BALANCE": "Balance",
+   
     "DATE": "Date",
     "NODATA": "Pas de donnéees",
-    "CODE": "Code",
-    "CODE1": "Code/Titre",
-    "TITLE": "Titre",
-    "TYPECODE": "Type de code",
-    "USAFELIMITE": "Usage/Limite",
-    "DATEEXPIRED": "Date d'expiration",
-    "NBRINSTALL": "nombre d'instalation",
-    "NBUSAGE": "nombre d’usage",
-    "CREATEAT": "Date de création",
-    "CHIFFREAFFAIRE": "Chiffre d'affaire",
-    "NBPRODUCTS": "Nb. Produits",
-    "TEAM": "Team leaders",
-    "MANAGER": "Responsable",
-    "SITENAME": "Nom du site",
-    "CITY": "Ville",
-    "SITE": "Site",
     "DOMICILE": "Adresse domicile",
-    "COLLABORATOR": "Collaborateurs" ,  
      "FULLNAME": "Nom & Prénom",
     "PHONE": "Téléphone",
     "EMAIL": "Email",
@@ -192,80 +136,13 @@
     "EDITPROFILE": "Modifier le profil" ,
      "SECURITY":"Sécurité"
   },
-  "CATEGORY": {
-    "ADD": "Ajouter une Categorie",
-    "TITLE": "Gestion des categories ",
-    "EDITPROFILE": "Modifier catégorie "
-  },
-  "PARTNER": {
-    "ADD": "Ajouter  un partenaire",
-    "TITLE": "Gestion des  partenaires  ",
-    "EDITPROFILE": "Modifier partenaire "
-  },
-  "INVOICE": {
-    "CONTROLAMOUNT": "Le montant doit etre superieur ou égale à",
-    "ADDFREE": "ajouté avec succés.",
-    "DTTN": "DT (dinar tunisien)",
-    "PRINT": "Imprimer",
-    "AMOUNTDUE": "Montant dû",
-    "DUETIME": "Heure d'échéance",
-    "RECEEIPTNUBER": "Reçu N°",
-    "FACTURATEAT": "Facturer à",
-    "DATEEMISSION": "Date d'émission",
-    "TIME": "Temps : ",
-    "TITLE": "Préfacturation",
-    "TOTAL_INVOICE": "Montant facturé",
-    "TOTAL_COLLECTED": "Montant encaissé",
-    "TOTAL_REVENUE": "Chiffre d’affaires",
-    "FACT": "Facturation",
-    "DETAILS": "Détails",
-    "ADD": "Ajouter Un Montant",
-    "ADDCREDIT": "Ajouter Un crédit",
-    "TOTALCARS": "véhicule total  ",
-    "CHIFFREAFFAIRE": "Chiffre d'affaire",
-    "TOTALNOASSIGNCARS": "véhicule non assigne ",
-    "CARSONLINE": "véhicule en ligne",
-    "CARSOFFLINE": "véhicule libre",
-    "CARSOCCUP": "véhicule occupe",
-    "PAYMENTHISTORIC": "Historique de paiement",
-    "UPLOADFILE": "Téléverser un fichier",
-    "DATE": "Date",
-    "AMOUNT": "Montant",
-    "DATEECH": "Date d'échéance",
-    "CREDIT": "crédit",
-    "AS": " est :",
-    "ADDMCREDIT": "Le montant total du crédit est  ",
-    "ADDMCREDIT2": "Le montant ajouté pour  ",
-    "RECEEIPT": "Réçu",
-    "COMMISSION": "Commission",
-    "INV": "Facture",
-    "FOR": "de",
-    "COPY": "Copy Ref",
-    "OPEN": "open",
-    "NEXTM": "Échéance le mois prochain",
-    "PAY": "Payer maintenant",
-    "EDITINV": "Modifier la facture",
-    "TOTALEARNING": "Revenus totaux",
-    "CONTACT": "Contact",
-    "DOWNFILE": "Télécharger le fichier",
-    "DENY": "Refuser",
-    "APPROVE": "Approuver",
-    "PAYECREDIT": "Payer le crédit",
-    "EDITAMOUNT": "Modifier le montant"
-  },
+ 
   "NAVBAR": {
     "LOGOUT1": "Vous quittez l'application ? ",
     "LOGOUT2": "Êtes-vous sûr de vouloir vous déconnecter ",
     "LOGOUT": "Déconnexion "
   },
-  "BADGE": {
-    "TITLE": "Gestion des badges",
-    "ADD": "Ajouter un badge",
-    "EDIT": "Modifier un badge",
-    "DETAILS": "Détails du badge",
-    "ASSSUCCESS": "Badge ajouté avec succès",
-    "EDITSUCCESS": "Badge modifié avec succès"
-  },
+
   "SAVE": "Enregistrer",
   "NEXT": "Suivant",
   "EDITPROFILE":"Modifier le profil",
@@ -274,45 +151,8 @@
   "FORMEMPTY": "Veuillez vérifier le formulaire.",
   "PERF": "Performance",
   "CSV": "Export CSV",
-  "PROMO": {
-    "GENERALEPROMO": "code promo générale ",
-    "TITLE": "Gestion des Codes Promo",
-    "BLANCE": "Balance",
-    "ADD": "Ajouter un Code promo",
-    "EDIT": "Modifier code promo",
-    "DETAILS": "Détail code promo",
-    "CREATE": "Creation du code",
-    "TARGET": "Cible",
-    "SAVE": "enregistrer par défaut ",
-    "DEATILSREFERRAL": "Détail  Code de Parrainage",
-    "EDITREFERRAL": "Modifier code de Parrainage",
-    "ADDREFERRAL": "Ajouter un  Code de Parrainage",
-    "ACRTIVECODE": "Activé",
-    "CODE": "Code promo",
-    "BLOCKED": "Bloqué",
-    "PREFERRALCODE": "Code de parrainage",
-    "TITREPREFFARAL": "Gestion des Codes de Parrainage",
-    "ADDREFFERAL": "Ajouter code parrainage"
-  },
-  "SALES": {
-    "TITLE": "Gestion des commandes",
-    "ADD": "Ajouter  une commande",
-    "TITLE2": "Liste des Factures"
-  },
-  "PRODUCT": {
-    "TITLE": "Gestion des produits",
-    "ADD": "Ajouter  un produit " , 
-    "ADD_ATTRIBUTE":"Ajouter un attribut"
-  },
-  "ATTRIBUT": {
-    "TITLE": "Gestion des attributes ",
-    "ADD": "Ajouter  un attribut "
-  },
-  "CHAT": {
-    "REPONSE": "Réponse",
-    "NOMESSAGETITLE": "Pas encore de message",
-    "NOMESSAGE": "Aucun message dans votre boîte de réception, pour l'instant ! Commencez à discuter avec les personnes autour de vous."
-  },
+ 
+ 
 
   "PERIOD": {
     "CURRENTWEEK": "Cette semaine",
@@ -326,26 +166,16 @@
     "LOGOUTTITLE": "Vous quittez l'application ? ",
     "LOGOUTSUBTITLE": "Êtes-vous sûr de vouloir vous déconnecter ",
     "LOGOUT": "Déconnexion ",
-    "ACTIVEPROMO": "Êtes-vous sûr de vouloir activer le code promo ?",
-    "ACTIVEPARAINNAGE": "Êtes-vous sûr de vouloir activer le code de parrainage ?",
-    "CHANGESTATUT": "Êtes-vous sûr de vouloir changer le statut ?",
-    "LOCKPROMO": "Êtes-vous sûr de vouloir verrouiller ce code promo ?",
-    "LOCKPREFERRELCODE": "Êtes-vous sûr de vouloir verrouiller ce code de parrainage pour ce chauffeur ?",
-    "DISABLEPROMO": "Êtes-vous sûr de vouloir désactiver ce code promo ?"
+    "CHANGESTATUT": "Êtes-vous sûr de vouloir changer le statut ?"
   },
   "STATE": {
 
   },
   "DELETEALLFILTER": "Effacer les Filtres",
-  "DT": "DT",
   "REF": "Référence",
-  "GOLDENDEAL": "Partenaire",
   "OTHER": "Autre",
   "LASTFIRSTNAME": "Nom et prénom",
-  "PRODUCTNAME": "Nom du produit",
-  "CAREGORY": "Categorie",
   "ENABLED": "Activé",
-  "REFUSED_REQUEST": "Demande refusée",
   "ENABLE_OR_DISABLE": "Activer / Désactiver",
   "ON_HOLD": "En attente"
 }
