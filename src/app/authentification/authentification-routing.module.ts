@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { LoginFormComponent } from './login-form/login-form.component';
-import { StoreRegisterFormComponent } from './store-register-form/store-register-form.component';
+import { PatientRegisterFormComponent } from './patient-register-form/patient-register-form.component';
 import { CodeValidationFormComponent } from './code-validation-form/code-validation-form.component';
 import { ForgotPasswordFormComponent } from './forgot-password-form/forgot-password-form.component';
 
@@ -14,7 +14,7 @@ const routes: Routes = [
     component: AuthLayoutComponent,
     children: [
       { path: 'login', component: LoginFormComponent },
-    { path: 'store/register', component: StoreRegisterFormComponent },
+    { path: 'patient/register', component: PatientRegisterFormComponent },
       { path: 'validation/:code', component: CodeValidationFormComponent },
       
       {

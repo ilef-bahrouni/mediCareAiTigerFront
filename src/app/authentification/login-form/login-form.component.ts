@@ -56,37 +56,27 @@ export class LoginFormComponent {
   onSubmitlogin() {
     if (this.form.valid) {
      this.loading=true;
-      this.authService.Login(this.form.value).pipe(
+      this.authService.Login(this.form.value)
+      .pipe(
 
         switchMap((response: any) => {
-         //  this.authService.SetToken(response.data.accessToken)
-          this.storageService.saveToken(response.data.accessToken);
-           return this.authService.AgentInitData()
+          this.storageService.saveToken(response.data)
+            return this.authService.InitData()
+      
         })
-      ).subscribe({
+      )
+      .subscribe({
         next: (res) => {
           if (res.code === 200) {
-this.loading=false
-  this.storageService.saveEntrepriseID(res?.data?.partnerRespDTO?.id)
+        this.loading = false
            this.permissionStore.setData(
-            res.data['partnerRespDTO']['name'],
-              res.data['agentResponseDTO']['lastName'],
-              res.data['agentResponseDTO']['firstName'],
-              res.data['agentResponseDTO']['gender'],
-              res.data['partnerRespDTO']['id'],
-              res.data['partnerRespDTO']['id'],
-              res.data['roleRespDTO']['name'],
-              res.data['roleRespDTO']['functionRespDTOS']
-             )
-          //  this.authService.AgentInitData().subscribe((res:any)=>{
-          //     console.log( res);
-              
-            // })
-            
-            // const functionNames = res.data['roleRespDTO']['functionRespDTOS'].map((func: any) => func.name);
-            // this.storageService.saveFunctions(functionNames);
-
-            this.toastService.showSuccess("AUTH.ALERTLOGINSUCCES")
+             res.data['profil']['id'],
+              res.data['profil']['lastName'],
+              res.data['profil']['firstName'],
+             
+              res.data['userType']
+             ) 
+            this.toastService.showSuccess("Successfully logged in!");
             this.router.navigateByUrl('/');
             this.authService.startAutoLogout();
 
