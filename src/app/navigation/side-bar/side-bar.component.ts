@@ -1,8 +1,9 @@
-import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, effect, inject, Injector, Input, OnChanges, OnInit, runInInjectionContext, SimpleChanges } from '@angular/core';
 import { StorageService } from '../../shared/services/storage.service';
 import { ConfirmModalComponent } from '../../shared/confirm-modal/confirm-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router, RouterModule } from '@angular/router';
+import { PermissionStore } from '../../stores/permission.store';
 
 @Component({
   selector: 'app-side-bar',
@@ -22,12 +23,35 @@ storageService = inject(StorageService)
     private modalService = inject(NgbModal);
     private router = inject(Router);
     menuBlocks : any[]=   [
+      // {
+      //   id: 1,
+      //   label: 'Dashboard',
+      //   link: '/' , 
+      //   icon :'/icons/home.svg'
+      // },
       {
-        id: 1,
-        label: 'Dashboard',
-        link: '/' , 
-        icon :'/icons/home.svg'
+        id: 6,
+        label: 'Records',
+        link: '/records' , 
+            icon :'/icons/users-icon.svg'
       }, 
+      {
+        id: 6,
+        label: 'appointment',
+        link: '/appointments' , 
+            icon :'/icons/users-icon.svg'
+      }, 
+    ] 
+     private injector = inject(Injector);
+     role ?: string ;
+     private permissionStore = inject(PermissionStore)
+  ngOnInit(): void {
+   runInInjectionContext(this.injector, () => {
+       effect(() => {
+     this.role = this.permissionStore.role();
+   setTimeout(() => {
+    if (this.role === 'AGENT') {
+          this.menuBlocks.push(
        {
         id: 2,
         label: 'Clients',
@@ -41,9 +65,18 @@ storageService = inject(StorageService)
         link: '/agents' , 
             icon :'/icons/users-icon.svg'
       }, 
-     
-    ] 
-  ngOnInit(): void {
- 
+       {
+        id: 5,
+        label: 'Doctors',
+        link: '/doctors' , 
+            icon :'/icons/users-icon.svg'
+      }, 
+       );
+    }
+         }, 200)
+    
+   });
+     }
+      );
   }
 }

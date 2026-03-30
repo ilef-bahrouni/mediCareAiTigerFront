@@ -31,10 +31,7 @@ export class AgentService {
 
     return this.http.get<any>(this.baseUrl + '/agent/role/findAll' , { withCredentials: true })
   } 
-  getFounctionsById(id :any ):Observable<any> {
-
-    return this.http.get<any>(this.baseUrl + '/agent/role/functionByRoleId?roleId='+id ,  { withCredentials: true })
-  } 
+  
   export(data :any) {
       const params = new HttpParams({ fromObject: data });
     const url = `${this.baseUrl}/agent/manageUser/agent/export` ;

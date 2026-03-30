@@ -112,15 +112,14 @@ export class ListeAgentsComponent {
         'TABLE.ROLE',
         'TABLE.ACTION'
       ];
-      this.dataColumns = ['id', 'Agent', 'partner', 'Regions', 'role', 'Action'];
+      this.dataColumns = ['id', 'Agent', 'partner', 'role', 'Action'];
     } else {
       this.displayedColumns = [
         'TABLE.REF',
         'TABLE.NAME',
-        'TABLE.REGION',
         'TABLE.ROLE','TABLE.ACTION'
       ];
-      this.dataColumns = ['id', 'Agent', 'Regions', 'role', 'Action'];
+      this.dataColumns = ['id', 'Agent', 'role', 'Action'];
     }
   }
   //Fonction pour récupérer la liste des agent

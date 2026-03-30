@@ -13,6 +13,15 @@
     "SELECTED":"Equipe selectionnée" , 
     "NBSELECTED":"sélectionné(s)"
   },
+   "DOCTOR": {
+    "TITLE": "Gestion des Médecins",
+    "TOTALDOCTORS": "Total des médecins",
+    "ONLINE": "Médecins en ligne",
+    "WORKING": "Médecins en route",
+    "EDIT": "Modifier un médecin ",
+    "ADD": "Ajouter un Médecin"  
+   
+  }, 
   "ALERT": {
     "CINRQUIRE": "Le CIN est obligatoire et doit comporter exactement 8 chiffres.",
     "EMAILREQUIRE": "Veuillez saisir une adresse e-mail valide.",
@@ -24,6 +33,8 @@
     "ROLEREQUIRE": "Le rôle est obligatoire."
   },
   "FORM": {
+    "ADRESSE": "Adresse",
+    "SPECIALIZATION": "Spécialisation",
     "FILTERCLIENT": "Rechercher Client ",
     "CLIENT": "Client",
     "GOLDEN": "Partenaire",
@@ -104,8 +115,12 @@
     "TO": "à",
     "OUTOF": "sur"
   },
+
   "TABLE": {
-   
+    "DOCTOR": "Médecin",
+    "PATIENT": "Patient",
+    "NBDIAGNOSTIC": "N° diagnostic",
+   "SPECIALIZATION": "Spécialisation",
     "DESCRIPTION": "Description",
     "NUM": "N°",
     "REF": "Référence",
@@ -115,7 +130,7 @@
     "USERNAME": "Nom d'utilisateur",
     "ADRESS": "Adresse ",
     "DATEINSCRIPTION": "Date d'inscription",
-    "CREATIONDATE": "Date d'inscription",
+    "CREATIONDATE": "Date de création",
     "ROLE": "Rôle",
     "REGION": "Région",
     "WEEK": "Semaine",
@@ -135,6 +150,21 @@
     "ADDPROFILE": "Profil de l'agent",
     "EDITPROFILE": "Modifier le profil" ,
      "SECURITY":"Sécurité"
+  },
+  "RECORD": {
+    "TITLE": "Gestion des dossiers médicaux",
+    "ADD": "Ajouter un nouveau dossier médical",
+    "DIAGNOSTIC": "Diagnostic",
+    "DESCRIPTION": "Description",
+    "PATIENT": "Patient",
+    "DOCTOR": "Médecin"
+  },
+  "APPOINTMENT": {
+    "TITLE": "Gestion des rendez-vous",
+    "ADD": "Ajouter un nouveau rendez-vous",
+    "PATIENT": "Patient",
+    "DOCTOR": "Médecin",
+    "DATE": "Date et Heure"
   },
  
   "NAVBAR": {

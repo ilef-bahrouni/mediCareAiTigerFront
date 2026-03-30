@@ -42,38 +42,16 @@
       </thead>
       <tbody>
         @if(dataSource.length != 0){ @for( item of dataSource; track item){
-        <tr  [ngClass]="{
-            'expanded-row pointer': isExpanded(item) && prefixe ==='SETTING'
-          }" (click)="toggleRow(item)">
+        <tr >
           @for( col of dataColumns ; track col){ 
             
-              @if( col === 'expend'  ){
-          <td class="align-middle" scope="col">
-            <span class="d-inline-flex align-items-center">
-              <svg [attr.transform]="isExpanded(item) ? 'rotate(90)' : 'rotate(0)'" width="32" height="32"
-                viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 12L18 16L14 20" stroke="#0A0A0A" stroke-width="1.33333" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-
-              ROLE #
-              {{ item?.name || "-" }}
-            </span>
-          </td>
-          } 
-          @else if(col ==='select'){
-          <td class="align-middle text-center">
-            <label class="custom-checkbox">
-              <input type="checkbox" [(ngModel)]="item.selected" (change)="onSelectOne(item)" />
-              <span class="checkmark"></span>
-            </label>
-          </td>
-          } 
+            
             @if(col === 'id' && (prefixe ==
-          'PAT-' || prefixe == 'AGE-' )){
+          'PAT-' || prefixe == 'AGE-' || prefixe == 'DOC-' ||prefixe ==="APP-" ) ){
           <td class="align-middle" scope="col">{{ prefixe }}{{ item[col] }}</td>
-          } @else if(col === 'Client' || col === 'Agent'){ @if (prefixe===
-          'AGE-') {
+          } @else if(col === 'Client' || col === 'Agent' || col ==='Doctor'){ 
+            @if (prefixe===
+          'AGE-' ) {
           <td scope="col" class="align-middle">
             <div class="d-flex align-items-center">
               <div>
@@ -88,7 +66,8 @@
               </div>
             </div>
           </td>
-          } @else if (prefixe=== 'PAT-') {
+          } 
+          @else if (prefixe=== 'PAT-') {
           <td scope="col" class="align-middle">
             <div class="d-flex align-items-center">
               <div>
@@ -107,7 +86,45 @@
               </div>
             </div>
           </td>
-          }@else{
+          }@else if (( prefixe === 'RECO-' || prefixe === 'APP-') && col ==='Client' ) {
+          <td scope="col" class="align-middle">
+            <div class="d-flex align-items-center">
+              <div>
+                <img
+                  class="img"
+                  [src]="
+                    item?.patient?.profilePhoto
+                      ? url + item?.patient?.profilePhoto
+                      : 'assets/images/avatar.png'
+                  "
+                />
+              </div>
+              <div class="ml-2" style="margin-left: 3%">
+                <p class="m-0">{{ item?.patient.firstName }} {{ item?.patient.lastName }}</p>
+                <span class="label-email"> {{item?.patient.email }}</span>
+              </div>
+            </div>
+          </td>
+          }@else if ( prefixe === 'APP-' && col ==='Doctor' ) {
+          <td scope="col" class="align-middle">
+            <div class="d-flex align-items-center">
+              <div>
+                <img
+                  class="img"
+                  [src]="
+                    item?.doctor?.profilePhoto
+                      ? url + item?.doctor?.profilePhoto
+                      : 'assets/images/avatar.png'
+                  "
+                />
+              </div>
+              <div class="ml-2" style="margin-left: 3%">
+                <p class="m-0">{{ item?.doctor.firstName }} {{ item?.doctor.lastName }}</p>
+                <span class="label-email"> {{item?.doctor.email }}</span>
+              </div>
+            </div>
+          </td>
+          } @else{
           <td scope="col" class="align-middle">
             <div class="d-flex align-items-center">
               <div>
@@ -228,17 +245,13 @@
         } -->
             }
           </td>
-          } @else if(col === 'orderDate' || col==='devisDate'){
-          <td scope="col" class="align-middle">
-            {{ item[col] | date : "yyyy-MM-dd hh:mm:ss" }}
-          </td>
           }
          
            @else if(col === 'Action'){
 
           <td class="d-flex text-center">
             
-            @if (prefixe !='AGC-') {<button
+            @if (prefixe !='AGC-' && prefixe !='APP-' ) {<button
               mat-icon-button
               class="btn btn-light btn-sm m-1"
               (click)="onDetails(item)"
@@ -266,7 +279,7 @@
             </button>}
 
             @if( prefixe ==='PRO-'|| prefixe ==='PAT-' 
-            ||prefixe ==='AGE-' ) {
+            ||prefixe ==='AGE-' || prefixe ==='DOC-' ) {
             <button
               mat-icon-button
              class="btn btn-light btn-sm m-1"
@@ -287,7 +300,7 @@
                 />
               </svg></button
             >}
-             @if( prefixe === "AGE-"  || prefixe === "PAT-" ){
+             @if( prefixe === "AGE-"  || prefixe === "PAT-" || prefixe === "APP-"  ){
             <button
               mat-icon-button
             class="btn btn-light btn-sm m-1"
@@ -318,39 +331,7 @@
 
           } }
         </tr>
-         @if(isExpanded(item)) {
-  <tr>
-    <td [attr.colspan]="dataColumns.length" class="bg-light p-4">
-    
-
-      <div class="row row-cols-1 row-cols-md-3 g-3">
-        @for(func of item.functions; track func.id) {
-          <div class="col">
-            <div class="card h-100 border-0 shadow-sm">
-              <div class="card-body p-3">
-                <div class="form-check form-switch mb-2">
-                  <input class="form-check-input" type="checkbox" [checked]="func.attached" 
-                         (change)="toggleFunction(item, func)">
-                  <label class="form-check-label fw-bold small">{{ func.name }}</label>
-                </div>
-                
-                <div class="ps-4">
-                  @for(sub of func.subFunctions; track sub.id) {
-                    <div class="d-flex justify-content-between align-items-center border-bottom py-1">
-                      <span class="small text-muted">{{ sub.name }}</span>
-                      <i class="bi bi-circle-fill" [style.color]="sub.attached ? '#2ecc71' : '#e74c3c'" style="font-size: 8px;"></i>
-                    </div>
-                  }
-                </div>
-              </div>
-            </div>
-          </div>
-        }
-      </div>
-    </td>
-  </tr>
-}
-        
+     
         }  
       } @else {
         <tr>

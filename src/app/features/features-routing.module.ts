@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListeAgentsComponent } from './admin/agent/liste-agents/liste-agents.component';
 import { ListePatientsComponent } from './admin/Client/liste-patients/liste-patients.component';
+import { DoctorListComponent } from './admin/doctor/doctor-list/doctor-list.component';
+import { RecordListComponent } from './admin/record/record-list/record-list.component';
+import { RecordDetailsComponent } from './admin/record/record-details/record-details.component';
+import { AppointmentlistComponent } from './admin/appointment/appointmentlist/appointmentlist.component';
 
 const routes: Routes = [
   {
@@ -17,9 +21,30 @@ const routes: Routes = [
   
   },
   
+   {
+    path: 'doctors',
+    component: DoctorListComponent,
+    
   
+  },
   
+   {
+    path: 'records',
+    component: RecordListComponent,
+    
   
+  },
+   {
+    path: 'appointments',
+    component: AppointmentlistComponent,
+    
+  
+  },
+    {
+  path: 'records/details/:id',
+  component: RecordDetailsComponent,
+
+},
   {
     path: 'clients',
     component: ListePatientsComponent,

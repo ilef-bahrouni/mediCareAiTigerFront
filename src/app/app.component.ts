@@ -4,6 +4,7 @@ import { PermissionStore } from './stores/permission.store';
 import { AuthService } from './shared/services/auth.service';
 import { ToastContainerComponent } from "./toaster/toast-container/toast-container.component";
 import { TranslateService } from '@ngx-translate/core';
+import { StorageService } from './shared/services/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -16,36 +17,34 @@ export class AppComponent implements OnInit {
   permissionStore = inject(PermissionStore);
   authService = inject(AuthService);
   router = inject(Router);
-  title = 'ESHOP';
+  title = 'Mediare AI Tiger Front';
+    storage = inject(StorageService);
   ngOnInit(): void {
-    
-    // if(this.storage.getToken() != null ){
-    // this.authService.checkToken().subscribe(
-    //   (res: any) => {
-    //     if (res.code === 200) {
-    //       this.permissionStore.setData(
-    //         res.data['partnerRespDTO']['name'],
-    //         res.data['agentResponseDTO']['lastName'],
-    //         res.data['agentResponseDTO']['firstName'],
-    //         res.data['agentResponseDTO']['gender'],
-    //         res.data['agentResponseDTO']['id'],
-    //         res.data['partnerRespDTO']['id'],
-    //         res.data['roleRespDTO']['name'],
-    //         res.data['roleRespDTO']['functionRespDTOS']
-    //       );
-    //     } else {
-    //       this.router.navigateByUrl('auth/login');
-    //     }
-    //   },
-    //   (error: any) => {
-    //     // console.log("err:",error);
+    if (this.storage.getToken() != null) {
+      this.authService.checkToken().subscribe((res: any) => {
 
-    //     this.router.navigate(['auth/login']);
-    //   }
-    // );
+        if (res.code === 200) {
+
+          this.permissionStore.setData(
+             res.data['profil']['id'],
+              res.data['profil']['lastName'],
+              res.data['profil']['firstName'],
+              res.data['userType']
+             ) 
+
+        }
+        else {
+          this.router.navigateByUrl('auth/login');
+        }
+      }, (error: any) => {
+        console.log("err:", error);
+
+        this.router.navigate(['auth/login']);
+      });
+    }
   }
   constructor(private translate: TranslateService) {
-    this.translate.setDefaultLang('fr');
-    this.translate.use('fr');
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
   } 
 }

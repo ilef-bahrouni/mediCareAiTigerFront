@@ -14,7 +14,6 @@ export class AuthService {
 //   isConnected = computed(() => this.token() !== null)
   header = new HttpHeaders({
     'Content-Type': 'application/json',
-    "ngrok-skip-browser-warning": "69420",
     'Authorization': 'Bearer ' + localStorage.getItem('token'),
 
   })
@@ -24,7 +23,7 @@ export class AuthService {
   constructor(private http : HttpClient,) { }
   baseUrl= environment.url
   Login(data: any): Observable<any> {
-    return this.http.post<any>(this.baseUrl + '/agent/auth/signIn', data,  { withCredentials: true }  );
+    return this.http.post<any>(this.baseUrl + '/auth/signIn', data,  { withCredentials: true }  );
   }
   ResetPassword(token: string, newPassword: string): Observable<any> {
     const url = `${this.baseUrl}/agent/auth/reset?token=${token}&newPassword=${newPassword}`;
@@ -33,22 +32,25 @@ export class AuthService {
   ForgotPassword(email: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/agent/auth/reset-request?email=${email}`, {}, { responseType: 'json' });
   }
+  RequestAccountPtient( data: any): Observable<any> {
+    return this.http.post<any>(
+      this.baseUrl + '/auth/requestAccount',
+      data , {withCredentials: true}
+    );
+  } 
   getAllPermissions(params: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/agent/role/permissions?`+params );
   }
 
-  AgentInitData(): Observable<any> {
-    return this.http.post<any>(this.baseUrl + '/agent/initData/initData', null, { withCredentials: true } );
+  InitData(): Observable<any> {
+    return this.http.post<any>(this.baseUrl + '/initData/initData', null, {  } );
   }
-   // Le token est automatiquement ajouté par l'authInterceptor
     // Le Guard a déjà vérifié si le token existe localement. 
   checkToken(): Observable<any> {
    
-    return this.http.post<any>(`${this.baseUrl}/agent/initData/checkToken`, null);
+    return this.http.post<any>(`${this.baseUrl}/initData/initData`, null);
   }
-  // checkAuth(): Observable<any> {
-  //   return this.http.post<any>(this.baseUrl + '/agent/initData/checkToken', null, { withCredentials: true } );
-  // }
+
    startAutoLogout() {
     const token = localStorage.getItem('token');
     if (!token) return;

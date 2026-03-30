@@ -3,17 +3,15 @@ import { signalStore, withState, withMethods, patchState } from '@ngrx/signals';
 interface PermissionState {
     permissions: any[];
     loading: boolean;
-    entrepriseId : number ;
-    entrepriseName : string;
     role : string ;
-    idAgent : number;
+    id : number;
     firstName:string;
     lastName : string;
     gender : string ;
 }
 export const PermissionStore = signalStore(
     { providedIn: 'root' },
-    withState<PermissionState>({ permissions: [], loading: false , entrepriseId : 1 , entrepriseName :'' , role : '' , idAgent : 0 , firstName :'' , lastName :'' , gender :''}),
+    withState<PermissionState>({ permissions: [], loading: false , role : '' , id : 0 , firstName :'' , lastName :'' , gender :''}),
 
     withMethods((store) => ({
 
@@ -23,22 +21,17 @@ export const PermissionStore = signalStore(
                 permissions: permissions
             }));
         },
-        setEntrepriseId: (id: number) => {
-            patchState(store, (state) => ({
-                ...state,
-                entrepriseId: id
-            }));
-        },
+       
         setRole: (role: string) => {
             patchState(store, (state) => ({
                 ...state,
                 role: role
             }));
         },
-        setIdAgent:(id : number)=>{
+        setId:(id : number)=>{
             patchState(store, (state) => ({
                 ...state,
-                idAgent: id
+                id: id
             }));
         },
         setFirstName:(name: string) => {
@@ -53,33 +46,26 @@ export const PermissionStore = signalStore(
                 lastName: name
             }));
         },
-        setEntrepriseName: (name: string) => {
-            patchState(store, (state) => ({
-                ...state,
-                entrepriseName: name
-            }));
-        },
+       
         setGender: (gender: string) => {
             patchState(store, (state) => ({
                 ...state,
                 gender: gender
             }));
         },
-        setData:(entrepriseName: string ,lastName:string ,firstName : string , gender : string ,idAgent : number, entrepriseId : number , role : string , permissions:any[])=>{
+        setData:( id : number, lastName:string ,firstName : string ,
+           role : string )=>{
             patchState(store, (state) => ({
                 ...state,
                 loading: true
             }));
             patchState(store, (state) => ({
                 ...state,
-                gender: gender,
+                  id: id,
                 lastName: lastName,
-                entrepriseName: entrepriseName,
                 firstName: firstName,
-                idAgent: idAgent,
+              
                 role: role,
-                entrepriseId: entrepriseId,
-                permissions: permissions,
                 loading: false
 
             }));

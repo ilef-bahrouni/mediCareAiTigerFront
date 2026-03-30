@@ -1,35 +1,47 @@
-import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { HttpErrorResponse, HttpEvent, HttpHandlerFn,  HttpRequest } from '@angular/common/http';
+import { inject, Injector } from '@angular/core';
+import { catchError, Observable } from 'rxjs';
+import { StorageService } from '../../shared/services/storage.service';
+import { Router } from '@angular/router';
+import { ToasterService } from '../../shared/services/toaster.service';
 
-@Injectable()
-export class loggingInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    //console.log("Request intercepted:", req);
+export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
+  const storageService = inject(StorageService);
+  const token = storageService.getToken();
+  const router = inject(Router);
 
-    const token = localStorage.getItem('authToken');
-    let authReq = req;
-    if (token) {
-      authReq = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-    }
+   const injector = inject(Injector);
+  // const token = auth.token();
+  if (!token) {
+    return next(req)
+  }
+  if (req.url.includes('/login')) {
+    return next(req);
+  }
+  // const headers = new HttpHeaders({
+  //   Authorization: token
+  // })
+  else {
+    let headers = req.headers.
+    append('Authorization', `Bearer ${token}`);;
 
-    
-    // Gérer la requête et intercepter la réponse
-    return next.handle(authReq).pipe(
-      tap({
-        next: (event: HttpEvent<any>) => {
-          if (event instanceof HttpResponse) {
-          //  console.log("Successful Response:", event.status); // Pour les réponses réussies
-          }
-        },
-        error: (error: HttpErrorResponse) => {
-          console.error("Error Response:", error); // Pour les erreurs
-        }
-      })
-    );
+    const newReq = req.clone({
+      headers
+    })
+
+    return next(newReq).pipe(catchError((error: HttpErrorResponse) => {
+      console.log(error);
+         const toastr = injector.get(ToasterService);
+
+      // Vérifie si le token est expiré
+      if (error.status === 401 && error.error?.error === 'TokenExpired') {
+         toastr.showError("SESSIONEXPIRED");
+        storageService.removeAll(); //vider le storage
+        router.navigateByUrl('auth/login');
+      }
+      throw error;
+    })
+    )
   }
 }
+

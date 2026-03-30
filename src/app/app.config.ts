@@ -2,7 +2,7 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } fr
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 
 // 1. Importez la fonction directement depuis le package animations
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'; 
@@ -12,15 +12,18 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideLottieOptions } from 'ngx-lottie';
 import player from 'lottie-web';
 import { provideToastr } from 'ngx-toastr';
+import { loggingInterceptor } from './shared/interceptor/logging.interceptor';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 export const appConfig: ApplicationConfig = {
   providers: [
+        provideHttpClient(withFetch(), withInterceptors([loggingInterceptor])),
+
   provideToastr({
       timeOut: 3000,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-bottom-left',
       preventDuplicates: true,
     }),
     provideAnimationsAsync(), 
