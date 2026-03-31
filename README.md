@@ -1,27 +1,81 @@
-# MediCareAiTigerFront
+# MediCareAI 🏥
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.7.
+> Smart healthcare management platform — PIDEV 2025/2026 | Esprit School of Engineering
 
-## Development server
+## 📋 Description
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+MediCareAI is a full-stack web application that streamlines healthcare management across three roles:
+- **Agent** — manages patients, doctors, and medicament inventory
+- **Doctor** — assigns medication schedules to patients with automated alerts
+- **Patient** — views their medication schedules and upcoming dose reminders
 
-## Code scaffolding
+## 🛠️ Tech Stack
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+| Layer | Technology |
+|-------|-----------|
+| Backend | Spring Boot 3, Spring Security, JWT, JPA/Hibernate, MySQL |
+| Frontend | Angular 17, NgBootstrap, NgRx Signals, ngx-translate |
+| Auth | JWT — Role-based (AGENT, DOCTOR, PATIENT) |
+| Scheduler | Spring `@Scheduled` — auto-generates medication alerts |
 
-## Build
+## 🚀 Getting Started
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Prerequisites
+- Java 17+
+- Node.js 18+
+- MySQL 8+
 
-## Running unit tests
+### Backend
+```bash
+cd mediCareAiTigerBack
+# Configure DB in src/main/resources/application.properties
+./mvnw spring-boot:run
+# Runs on http://localhost:8081
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Frontend
+```bash
+cd mediCareAiTigerFront
+npm install
+ng serve
+# Runs on http://localhost:4200
+```
 
-## Running end-to-end tests
+## ✅ Features
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Agent
+- Patient & doctor management (CRUD)
+- Medicament inventory with stock control
+- User state management (enable / block / delete)
+- CSV export
 
-## Further help
+### Doctor
+- Browse patient list
+- Create, edit, delete medication schedules per patient
+- Configure dose, days of week, times of day, and alert timing
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Patient
+- View active medication schedules
+- Upcoming dose alerts with read/unread status
+- Email reminders sent automatically before each dose
+
+## 📁 Project Structure
+
+```
+mediCareAiTigerBack/     → Spring Boot REST API
+mediCareAiTigerFront/    → Angular SPA
+```
+
+## 🔐 Security
+
+- Stateless JWT authentication
+- Role-based endpoint protection (`ROLE_AGENT`, `ROLE_DOCTOR`, `ROLE_PATIENT`)
+- Token expiry handling with automatic logout
+
+## 👥 Team — 4SE\<num\>
+
+| Name | Role |
+|------|------|
+
+| Aziz | Full-stack |
+| Ilef | Full-stack |

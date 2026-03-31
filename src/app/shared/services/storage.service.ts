@@ -99,5 +99,13 @@ export class StorageService {
         localStorage.removeItem(key);
     });
   }
-  
+
+  public getUserType(): string | null {
+    return localStorage.getItem('userType');
+  }
+  public saveUserType(userType: string): void {
+    localStorage.removeItem('userType');
+    localStorage.setItem('userType', userType);
+  }
+
 }

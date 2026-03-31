@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
              res.data['profil']['id'],
               res.data['profil']['lastName'],
               res.data['profil']['firstName'],
+              res.data['profil']['role'] ?? '',
               res.data['userType']
              ) 
 

@@ -39,9 +39,7 @@ form!: FormGroup;
   save() {
     if (this.form.valid) {
       this.authService
-        .RequestAccountPtient(
-          this.form.value
-        )
+        .requestAccountPatient(this.form.value)
         .subscribe((res) => {
           if (res.code == 200) {
          this.toastService.showSuccess("Account request sent successfully! Please wait for approval.");

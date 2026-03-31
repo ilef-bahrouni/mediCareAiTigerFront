@@ -1,22 +1,21 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FullComponent } from './layout/full/full.component';
 import { BlankComponent } from './layout/blank/blank.component';
-// import { authGuard } from './core/guards/auth.guard';
-// import { noAuthGuard } from './core/guards/no-auth.guard';
+import { authGuard } from './core/guards/auth.guard';
+import { noAuthGuard } from './core/guards/no-auth.guard';
 
 export const routes: Routes = [
-
   {
     path: '',
     component: FullComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: '',
-        loadChildren: () => import('./features/features.module').then(m => m.FeaturesModule), 
-      //   canActivate: [authGuard],
-        //canActivateChild: [authGuard], 
-      }]
+        loadChildren: () =>
+          import('./features/features.module').then(m => m.FeaturesModule),
+      },
+    ],
   },
   {
     path: '',
@@ -24,12 +23,12 @@ export const routes: Routes = [
     children: [
       {
         path: 'auth',
-        loadChildren: () => import('./authentification/authentification.module').then(m => m.AuthentificationModule) // Chargement du module 'features'
-      //  , canActivate: [noAuthGuard],
-      //    canActivateChild: [noAuthGuard], 
-      }
-    ]
+        canActivate: [noAuthGuard],
+        loadChildren: () =>
+          import('./authentification/authentification.module').then(
+            m => m.AuthentificationModule
+          ),
+      },
+    ],
   },
- 
-
 ];

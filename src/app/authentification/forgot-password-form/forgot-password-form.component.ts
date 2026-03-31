@@ -33,8 +33,8 @@ export class ForgotPasswordFormComponent {
   }
   onSubmit() {
     if (this.AuthForm.valid) {
-      this.authService.ForgotPassword(this.AuthForm.get('email')?.value).subscribe(
-        (response) => {
+      this.authService.forgotPassword(this.AuthForm.get('email')?.value).subscribe(
+        (response: any) => {
           if (response.code === 200) {
             // this.router.navigate(['/auth/reset/password/' + response.data]);
             this.toastService.showSuccess(response.msg)
@@ -44,7 +44,7 @@ export class ForgotPasswordFormComponent {
 
           }
         },
-        (error) => {
+        (error: any) => {
            this.toastService.showError('ERRORSERVENU');
           // console.error('Error in password reset request:', error);
 

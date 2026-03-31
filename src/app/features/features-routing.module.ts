@@ -6,6 +6,8 @@ import { DoctorListComponent } from './admin/doctor/doctor-list/doctor-list.comp
 import { RecordListComponent } from './admin/record/record-list/record-list.component';
 import { RecordDetailsComponent } from './admin/record/record-details/record-details.component';
 import { AppointmentlistComponent } from './admin/appointment/appointmentlist/appointmentlist.component';
+import { MedicamentListComponent } from './admin/medicament/medicament-list/medicament-list.component';
+import { ScheduleListComponent } from './admin/schedule/schedule-list/schedule-list.component';
 
 const routes: Routes = [
   {
@@ -45,6 +47,14 @@ const routes: Routes = [
   component: RecordDetailsComponent,
 
 },
+  {
+    path: 'medicaments',
+    component: MedicamentListComponent,
+  },
+  {
+    path: 'schedules',
+    component: ScheduleListComponent,
+  },
   {
     path: 'clients',
     component: ListePatientsComponent,

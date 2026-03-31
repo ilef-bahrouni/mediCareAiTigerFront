@@ -1,82 +1,56 @@
-import { Component, effect, inject, Injector, Input, OnChanges, OnInit, runInInjectionContext, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { StorageService } from '../../shared/services/storage.service';
-import { ConfirmModalComponent } from '../../shared/confirm-modal/confirm-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router, RouterModule } from '@angular/router';
-import { PermissionStore } from '../../stores/permission.store';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.css',
-  standalone :true , 
-  imports:[RouterModule]
+  standalone: true,
+  imports: [RouterModule, CommonModule]
 })
 export class SideBarComponent implements OnChanges {
-    @Input() isMenuOpen = false;
+  @Input() isMenuOpen = false;
+
+  storageService = inject(StorageService);
+  private router = inject(Router);
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isMenuOpen']) {
       this.isMenuOpen = changes['isMenuOpen'].currentValue;
     }
+  }
+
+  get menuBlocks(): any[] {
+    const userType = this.storageService.getUserType();
+    const base = [
+      { id: 6, label: 'Records',      link: '/records',      icon: '/icons/users-icon.svg' },
+      { id: 7, label: 'Appointments', link: '/appointments', icon: '/icons/users-icon.svg' },
+    ];
+
+    if (userType === 'AGENT') {
+      return [
+        { id: 2, label: 'Clients',      link: '/clients',      icon: '/icons/users-icon.svg' },
+        { id: 4, label: 'Agents',       link: '/agents',       icon: '/icons/users-icon.svg' },
+        { id: 5, label: 'Doctors',      link: '/doctors',      icon: '/icons/users-icon.svg' },
+        { id: 8, label: 'Medicaments',  link: '/medicaments',  icon: '/icons/users-icon.svg' },
+        ...base,
+      ];
     }
-storageService = inject(StorageService)
-    private modalService = inject(NgbModal);
-    private router = inject(Router);
-    menuBlocks : any[]=   [
-      // {
-      //   id: 1,
-      //   label: 'Dashboard',
-      //   link: '/' , 
-      //   icon :'/icons/home.svg'
-      // },
-      {
-        id: 6,
-        label: 'Records',
-        link: '/records' , 
-            icon :'/icons/users-icon.svg'
-      }, 
-      {
-        id: 6,
-        label: 'appointment',
-        link: '/appointments' , 
-            icon :'/icons/users-icon.svg'
-      }, 
-    ] 
-     private injector = inject(Injector);
-     role ?: string ;
-     private permissionStore = inject(PermissionStore)
-  ngOnInit(): void {
-   runInInjectionContext(this.injector, () => {
-       effect(() => {
-     this.role = this.permissionStore.role();
-   setTimeout(() => {
-    if (this.role === 'AGENT') {
-          this.menuBlocks.push(
-       {
-        id: 2,
-        label: 'Clients',
-        link: '/clients' , 
-        icon :'/icons/users-icon.svg'
-      },
-       
-      {
-        id: 4,
-        label: 'Agents',
-        link: '/agents' , 
-            icon :'/icons/users-icon.svg'
-      }, 
-       {
-        id: 5,
-        label: 'Doctors',
-        link: '/doctors' , 
-            icon :'/icons/users-icon.svg'
-      }, 
-       );
+
+    if (userType === 'DOCTOR') {
+      return [
+        { id: 2, label: 'Patients',     link: '/clients',      icon: '/icons/users-icon.svg' },
+        { id: 8, label: 'Medicaments',  link: '/medicaments',  icon: '/icons/users-icon.svg' },
+        { id: 9, label: 'Schedules',    link: '/schedules',    icon: '/icons/users-icon.svg' },
+        ...base,
+      ];
     }
-         }, 200)
-    
-   });
-     }
-      );
+
+    return [
+      { id: 9, label: 'Schedules', link: '/schedules', icon: '/icons/users-icon.svg' },
+      ...base,
+    ];
   }
 }

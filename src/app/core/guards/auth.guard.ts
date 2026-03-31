@@ -3,25 +3,13 @@ import { inject } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
- const authService = inject(AuthService);
+  const authService = inject(AuthService);
   const router = inject(Router);
 
-  let isAuthenticated = false;
+  if (authService.isTokenValid()) {
+    return true;
+  }
 
-  authService.checkToken().subscribe({
-    next: (res) => {
-      console.log(res);
-      
-      if (res.code === 200) {
-        isAuthenticated = true;
-      } else {
-           router.navigate(['/auth/login']);
-     
-      }
-    },
-    error: () => router.navigate(['/auth/login'])
-  });
-
-  return isAuthenticated;
-
+  router.navigate(['/auth/login']);
+  return false;
 };

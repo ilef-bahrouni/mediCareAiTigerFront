@@ -3,6 +3,8 @@
 @import "@ng-select/ng-select/themes/default.theme.css";
 /* You can add global styles to this file, and also import other style files */
 @import 'quill/dist/quill.snow.css'; 
+/* Fix Angular missing CSS */
+
 :root {
   --color-principal: #0a4db8;
   /* --color-principal: #081a4f; */
