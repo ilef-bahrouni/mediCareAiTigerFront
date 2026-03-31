@@ -31,8 +31,8 @@ export class ClientService {
 
   updatePatient(id: any, data: any): Observable<any> {
     return this.http.put<any>(
-      this.baseUrl + '/agent/manageUser/updatePatient?idPatient=' + id,
-      data, {withCredentials: true}
+      this.baseUrl + '/agent/manageUser/updatePatient?id=' + id,
+      data
     );
   }
    createPatient( data: any): Observable<any> {
@@ -41,8 +41,11 @@ export class ClientService {
       data , {withCredentials: true}
     );
   }
-  deletePatient(id: any) {
-    return this.http.delete(this.baseUrl + '/agent/manageUser/deletePatient/' + id, {withCredentials: true});
+  changeUserState(userId: any, state: string): Observable<any> {
+    return this.http.put<any>(
+      this.baseUrl + `/agent/manageUser/changeUserState?userId=${userId}&state=${state}`,
+      null
+    );
   }
 
   getClientById(id: any): Observable<any> {

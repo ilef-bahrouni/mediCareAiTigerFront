@@ -36,9 +36,14 @@ export class PatientModalComponent {
     private toastr: ToastrService,
     private translate: TranslateService,
   ) {}
-  formatDate(dateString: string): string {
-    if (!dateString) return ''; // Vérifie si la date existe
-    return dateString.split(' ')[0]; // Garde uniquement "YYYY-MM-DD"
+  formatDate(val: any): string {
+    if (!val) return '';
+    if (Array.isArray(val)) {
+      const [y, m, d] = val;
+      return `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    }
+    // "yyyy-MM-dd HH:mm:ss" → "yyyy-MM-dd"
+    return String(val).split(' ')[0].split('T')[0];
   }
   ClientForm!: FormGroup;
   ngOnInit(): void {
@@ -61,85 +66,57 @@ export class PatientModalComponent {
     //   firstName: 'firstname',
     //   lastName: 'lastname',
     // };
-    if ( this.modaltype ==='add'){
- this.ClientForm = this.fb.group({
-      firstName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(4),
-      ]),
-      lastName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(4),
-      ]),
-      email: new FormControl('', [
-        Validators.required,
-        Validators.email,
-      ]),
-      phoneNumber: new FormControl('', [
-        // Validators.required,
-      ]),
+    if (this.modaltype === 'add') {
+      this.ClientForm = this.fb.group({
+        firstName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern(/^[a-zA-ZÀ-ÿ\s'-]+$/)]),
+        lastName:  new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern(/^[a-zA-ZÀ-ÿ\s'-]+$/)]),
+        email:     new FormControl('', [Validators.required, Validators.email]),
+        phoneNumber: new FormControl('', [Validators.pattern(/^\+?[0-9]{8,15}$/)]),
+        birthDate: new FormControl('', [Validators.required, this.pastDateValidator]),
+      });
+    } else {
+      this.ClientForm = this.fb.group({
+        firstName: new FormControl(this.data.firstName, [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern(/^[a-zA-ZÀ-ÿ\s'-]+$/)]),
+        lastName:  new FormControl(this.data.lastName,  [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern(/^[a-zA-ZÀ-ÿ\s'-]+$/)]),
+        email:     new FormControl(this.data.email,     [Validators.required, Validators.email]),
+        phoneNumber: new FormControl(this.data.phoneNumber ?? '', [Validators.pattern(/^\+?[0-9]{8,15}$/)]),
+        birthDate: new FormControl(this.formatDate(this.data?.birthDate), [this.pastDateValidator]),
+      });
+    }
+  }
+  today = new Date().toISOString().split('T')[0];
 
-      birthDate: new FormControl('', [
-        Validators.required,
-      ]),
-    });
-    }else {
-    this.ClientForm = this.fb.group({
-      firstName: new FormControl(this.data.firstName, [
-        Validators.required,
-        Validators.minLength(4),
-      ]),
-      lastName: new FormControl(this.data.lastName, [
-        Validators.required,
-        Validators.minLength(4),
-      ]),
-      email: new FormControl(this.data.email, [
-        Validators.required,
-        Validators.email,
-      ]),
-      phoneNumber: new FormControl(this.data.phoneNumber, [
-        // Validators.required,
-      ]),
+  pastDateValidator(control: any) {
+    if (!control.value) return null;
+    return new Date(control.value) < new Date() ? null : { futureDate: true };
+  }
 
-      birthDate: new FormControl(this.formatDate(this.data.birthDate), [
-        Validators.required,
-      ]),
-    });}
-  }
-  get firstName() {
-    return this.ClientForm.get('firstName');
-  }
-  get lastName() {
-    return this.ClientForm.get('lastName');
-  }
-  get email() {
-    return this.ClientForm.get('email');
-  }
-  get birthDate() {
-    return this.ClientForm.get('birthDate');
-  }
-  get phoneNumber() {
-    return this.ClientForm.get('phoneNumber');
-  }
+  get firstName() { return this.ClientForm.get('firstName'); }
+  get lastName()  { return this.ClientForm.get('lastName'); }
+  get email()     { return this.ClientForm.get('email'); }
+  get birthDate() { return this.ClientForm.get('birthDate'); }
+  get phoneNumber() { return this.ClientForm.get('phoneNumber'); }
 
   save() {
-    if (this.ClientForm.valid ) {
-    
-      let { birthDate, ...obj } = this.ClientForm.value;
-
-      obj = {
-        ...obj,
-        homeAddress:"",
-        homeLatitude:0, 
-        homeLongitude:0 
-        // birthDate: this.convertToISO(this.ClientForm.get('birthDate')?.value),
+    if (this.ClientForm.valid) {
+      const raw = this.ClientForm.value;
+      const obj: any = {
+        firstName: raw.firstName,
+        lastName: raw.lastName,
+        email: raw.email,
+        phoneNumber: raw.phoneNumber ?? '',
+        birthDate: raw.birthDate ? this.convertToISO(raw.birthDate) : null,
       };
-let apiCall = this.data?.id ? this.api.updatePatient(this.data.id, obj) : this.api.createPatient(obj);
+
+      const apiCall = this.data?.id
+        ? this.api.updatePatient(this.data.id, obj)
+        : this.api.createPatient(obj);
+
       apiCall.subscribe((res: any) => {
         if (res.code == 200) {
           this.activeModal.close('Modal Closed');
           this.ClientForm.reset();
-        }  else {
+        } else {
           this.showError('Erreur', res.msg);
         }
       });
@@ -149,11 +126,12 @@ let apiCall = this.data?.id ? this.api.updatePatient(this.data.id, obj) : this.a
   }
 
   convertToISO(dateStr: string): string {
+    // Input: yyyy-MM-dd  →  Output: dd/MM/yyyy
     const parts = dateStr.split('-');
     if (parts.length === 3) {
-      return `${parts[2]}/${parts[1]}/${parts[0]}`; // yyyy-MM-dd
+      return `${parts[2]}/${parts[1]}/${parts[0]}`;
     }
-    return dateStr; // Si le format est incorrect, ne pas modifier
+    return dateStr;
   }
 
   dismissModal() {

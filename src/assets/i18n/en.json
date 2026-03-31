@@ -149,6 +149,48 @@
     "PASSWORDVALIDATIONALPHA":"Password must include at least one uppercase letter, one lowercase letter, one number, and one special character."
 
   },
+  "MEDICAMENT": {
+    "TITLE": "Medicament Management",
+    "ADD": "Add Medicament",
+    "EDIT": "Edit Medicament",
+    "NAME": "Name",
+    "NAME_PLACEHOLDER": "e.g. Paracetamol",
+    "DESCRIPTION": "Description",
+    "DESC_PLACEHOLDER": "Optional description...",
+    "SEARCH": "Search medicaments...",
+    "NO_DESC": "No description provided",
+    "TOTAL": "Total medicaments",
+    "RESULTS": "Results found",
+    "STOCK": "Stock",
+    "EDIT_STOCK": "Edit stock"
+  },
+  "SCHEDULE": {
+    "TITLE": "Medication Schedules",
+    "ADD": "Add Schedule",
+    "EDIT": "Edit Schedule",
+    "SCHEDULES": "Schedules",
+    "MY_SCHEDULES": "My Medication Schedules",
+    "SELECT_PATIENT": "Select a patient to view or manage their schedules",
+    "DOSE": "Dose",
+    "START_DATE": "Start Date",
+    "END_DATE": "End Date",
+    "OPTIONAL": "optional",
+    "ALERT_BEFORE": "Alert Before",
+    "DAYS": "Days of Week",
+    "TIMES": "Times of Day",
+    "ADD_TIME": "Add Time",
+    "UPCOMING_ALERTS": "Upcoming Alerts"
+  },
+  "VALIDATION": {
+    "REQUIRED": "This field is required.",
+    "MAX_120": "Maximum 120 characters allowed.",
+    "MAX_500": "Maximum 500 characters allowed.",
+    "MIN_0": "Value must be 0 or greater."
+  },
+  "ACTION": {
+    "EDIT": "Edit",
+    "DELETE": "Delete"
+  },
   "RECORD": {
     "TITLE": "Medical Records Management",
     "ADD": "Add New Medical Record",

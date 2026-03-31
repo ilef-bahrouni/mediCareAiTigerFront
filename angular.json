@@ -27,14 +27,15 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "./node_modules/intl-tel-input/build/css/intlTelInput.css",
-                "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/assets/style.css",
-              "src/styles.css",
-             "./node_modules/leaflet/dist/leaflet.css" ,
-             "node_modules/ngx-toastr/toastr.css"   
-            ],
+       "styles": [
+  "node_modules/intl-tel-input/build/css/intlTelInput.css",
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "src/assets/style.css",
+  "src/styles.css",
+  "node_modules/leaflet/dist/leaflet.css",
+  "node_modules/ngx-toastr/toastr.css",
+  "node_modules/quill/dist/quill.snow.css"
+],
             "scripts": [           
                  "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"  
 ],

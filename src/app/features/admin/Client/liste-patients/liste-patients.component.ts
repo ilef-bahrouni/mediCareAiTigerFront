@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from '../../../../shared/services/client.service';
+import { MedicamentService } from '../../../../shared/services/medicament.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmModalComponent } from '../../../../shared/confirm-modal/confirm-modal.component';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { ExportCSVService } from '../../../../shared/services/export-csv.service';
 import { PermissionStore } from '../../../../stores/permission.store';
 import { StorageService } from '../../../../shared/services/storage.service';
@@ -68,11 +69,26 @@ actionsPermissions = {
 };
   private permissionStore = inject(PermissionStore);
  stoarge = inject(StorageService);
- private patienttService= inject(ClientService);
-  private router = inject(Router); 
- 
-  // queryParams :any[] =[]
+ private patienttService = inject(ClientService);
+ private medicamentService = inject(MedicamentService);
+  private router = inject(Router);
+
+  get isAgent(): boolean {
+    return this.stoarge.getUserType() === 'AGENT';
+  }
+
+  private fetchPatients(obj: any): Observable<any> {
+    return this.isAgent
+      ? this.patienttService.getAllClient(obj)
+      : this.medicamentService.getPatients(obj);
+  }
+
   ngOnInit(): void {
+    // Patients have no business on this page — redirect to their schedule
+    if (this.stoarge.getUserType() === 'PATIENT') {
+      this.router.navigateByUrl('/schedules');
+      return;
+    }
 this.entrepriseId =  this.stoarge.getEntrepriseID();
     this.loading = true;
 
@@ -89,7 +105,7 @@ this.entrepriseId =  this.stoarge.getEntrepriseID();
       year: new Date().getFullYear()
     };
     forkJoin([
-      this.patienttService.getAllClient(obj),
+      this.fetchPatients(obj),
     ]).subscribe(
       (rlt: any) => {
         this.loading = false;
@@ -98,7 +114,7 @@ this.entrepriseId =  this.stoarge.getEntrepriseID();
         this.loading = false;
         this.totalPage = rlt[0].data.totalElements;
         this.numberOfClient = rlt[0].data.totalElements;
-        this.prefixe = 'PAT-';
+        this.prefixe = this.isAgent ? 'PAT-' : 'DPAT-';
   },
       (err: any) => {
         this.loading = false;
@@ -116,13 +132,13 @@ this.entrepriseId =  this.stoarge.getEntrepriseID();
       sortProperty: 'id',
     };
     if (this.checkRef) {
-      this.patienttService.getAllClient(obj).subscribe((res: any) => {
+      this.fetchPatients(obj).subscribe((res: any) => {
         this.Clients = res.data.content;
         this.collectionSize = this.Clients.length;
         this.loading = false;
         this.totalPage = res.data.totalElements;
         this.numberOfClient = res.data.totalElements;
-        this.prefixe = 'CLI-';
+        this.prefixe = this.isAgent ? 'PAT-' : 'DPAT-';
       });
     } else {
       this.Clients = [];
@@ -163,15 +179,17 @@ this.entrepriseId =  this.stoarge.getEntrepriseID();
   }
 
   delete(item: any) {
-    const modalRef = this.modalService.open(ConfirmModalComponent, {
-      centered: true,
-    });
+    const modalRef = this.modalService.open(ConfirmModalComponent, { centered: true });
     modalRef.componentInstance.data = item;
-    modalRef.result
-      .then((result) => {
-        this.getPatientsList();
-      })
-      .catch((reason) => { });
+    modalRef.result.then((result) => {
+      if (result !== 'confirm') return;
+      this.patienttService.changeUserState(item.id, 'DELETED').subscribe({
+        next: (res: any) => {
+          if (res.code === 200) this.getPatientsList();
+        },
+        error: () => {}
+      });
+    }).catch(() => {});
   }
 
   // redirection vers profile client

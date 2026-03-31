@@ -1,104 +1,98 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../shared/services/auth.service';
-import { StorageService } from '../../shared/services/storage.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { AuthService, UserRole } from '../../shared/services/auth.service';
+import { StorageService } from '../../shared/services/storage.service';
 import { ToasterService } from '../../shared/services/toaster.service';
-import { switchMap } from 'rxjs';
 import { PermissionStore } from '../../stores/permission.store';
 
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [TranslateModule , ReactiveFormsModule ,RouterModule],
+  imports: [CommonModule, TranslateModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login-form.component.html',
-  styleUrl: './login-form.component.css'
+  styleUrl: './login-form.component.css',
 })
 export class LoginFormComponent {
-  permissionStore = inject(PermissionStore )
- form!: FormGroup;
-  private formBuilder = inject(FormBuilder);
-  loading: boolean = false ;
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-    private toastService: ToasterService,
-    private storageService: StorageService,
+  permissionStore = inject(PermissionStore);
+  form!: FormGroup;
+  loading = false;
 
-  ) {
-    if (storageService.getToken()) {
-      router.navigateByUrl('');
+  roles: { label: string; value: UserRole }[] = [
+    { label: 'Agent', value: 'AGENT' },
+    { label: 'Médecin', value: 'DOCTOR' },
+    { label: 'Patient', value: 'PATIENT' },
+  ];
+
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private storageService = inject(StorageService);
+  private toastService = inject(ToasterService);
+
+  constructor() {
+    if (this.authService.isTokenValid()) {
+      this.router.navigateByUrl('');
     } else {
-      storageService.removeAll();
+      this.storageService.removeAll();
     }
   }
+
   ngOnInit(): void {
-    // this.form = new FormGroup({
-    //   username: new FormControl('', [Validators.required]),
-    //   password: new FormControl('', [Validators.required]),
-    // });
-    this.form = this.formBuilder.group({
-      username: ['',[Validators.required]],
-      password: ['',[Validators.required]],
+    this.form = this.fb.group({
+      role: ['AGENT', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
     });
-    //  console.log( this.formUtilities.getControl(this.form, 'username'));
   }
-  // get username() {
-  //   return this.form.get('username');
-  // }
-  // get password() {
-  //   return this.form.get('password');
-  // }
+
   get f() {
     return this.form.controls;
   }
-  onSubmitlogin() {
-    if (this.form.valid) {
-     this.loading=true;
-      this.authService.Login(this.form.value)
-      .pipe(
 
-        switchMap((response: any) => {
-          this.storageService.saveToken(response.data)
-            return this.authService.InitData()
-      
-        })
-      )
-      .subscribe({
-        next: (res) => {
-          if (res.code === 200) {
-        this.loading = false
-           this.permissionStore.setData(
-             res.data['profil']['id'],
-              res.data['profil']['lastName'],
-              res.data['profil']['firstName'],
-             
-              res.data['userType']
-             ) 
-            this.toastService.showSuccess("Successfully logged in!");
-            this.router.navigateByUrl('/');
-            this.authService.startAutoLogout();
-
-          } else {
-            this.toastService.showError(res.msg);
-            this.loading=false
-          }
-        },
-        error: () => {
-          this.loading=false
-          this.toastService.showError("AUTH.ALERTLOGINERROR")
-
-        },
-      });
-
-    } else {
-          Object.keys(this.form.controls).forEach((field) => {
-        const control = this.form.get(field);
-        control?.markAsTouched({ onlySelf: true });
-
-      });
-      this.toastService.showError('FORMEMPTY')
+  onSubmit(): void {
+    if (this.form.invalid) {
+      Object.values(this.form.controls).forEach(c => c.markAsTouched());
+      this.toastService.showError('FORMEMPTY');
+      return;
     }
+
+    this.loading = true;
+    const { role, username, password } = this.form.value;
+
+    this.authService.login(role as UserRole, { username, password }).subscribe({
+      next: (res: any) => {
+        this.loading = false;
+        if (res.code === 200) {
+          const tokens = res.data;
+          this.storageService.saveToken(tokens.accessToken);
+          this.storageService.saveUserType(role);
+
+          // Decode JWT to get user info
+          const payload = this.authService.decodeToken(tokens.accessToken);
+          if (payload) {
+            this.permissionStore.setData(
+              payload.id ?? 0,
+              payload.lastName ?? '',
+              payload.firstName ?? '',
+              payload.role ?? '',
+              role
+            );
+          }
+
+          this.toastService.showSuccess('Successfully logged in!');
+          this.authService.startAutoLogout();
+          this.router.navigateByUrl('/');
+        } else {
+          this.toastService.showError(res.msg ?? 'AUTH.ALERTLOGINERROR');
+        }
+      },
+      error: () => {
+        this.loading = false;
+        this.toastService.showError('AUTH.ALERTLOGINERROR');
+      },
+    });
   }
 }

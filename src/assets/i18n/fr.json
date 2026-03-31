@@ -151,6 +151,31 @@
     "EDITPROFILE": "Modifier le profil" ,
      "SECURITY":"Sécurité"
   },
+  "MEDICAMENT": {
+    "TITLE": "Gestion des Médicaments",
+    "ADD": "Ajouter un Médicament",
+    "EDIT": "Modifier le Médicament",
+    "NAME": "Nom",
+    "NAME_PLACEHOLDER": "ex. Paracétamol",
+    "DESCRIPTION": "Description",
+    "DESC_PLACEHOLDER": "Description optionnelle...",
+    "SEARCH": "Rechercher un médicament...",
+    "NO_DESC": "Aucune description",
+    "TOTAL": "Total médicaments",
+    "RESULTS": "Résultats trouvés",
+    "STOCK": "Stock",
+    "EDIT_STOCK": "Modifier le stock"
+  },
+  "VALIDATION": {
+    "REQUIRED": "Ce champ est obligatoire.",
+    "MAX_120": "Maximum 120 caractères autorisés.",
+    "MAX_500": "Maximum 500 caractères autorisés.",
+    "MIN_0": "La valeur doit être 0 ou plus."
+  },
+  "ACTION": {
+    "EDIT": "Modifier",
+    "DELETE": "Supprimer"
+  },
   "RECORD": {
     "TITLE": "Gestion des dossiers médicaux",
     "ADD": "Ajouter un nouveau dossier médical",
@@ -181,6 +206,23 @@
   "FORMEMPTY": "Veuillez vérifier le formulaire.",
   "PERF": "Performance",
   "CSV": "Export CSV",
+  "SCHEDULE": {
+    "TITLE": "Plannings de Médicaments",
+    "ADD": "Ajouter un Planning",
+    "EDIT": "Modifier le Planning",
+    "SCHEDULES": "Plannings",
+    "MY_SCHEDULES": "Mes Plannings de Médicaments",
+    "SELECT_PATIENT": "Sélectionnez un patient pour voir ou gérer ses plannings",
+    "DOSE": "Dose",
+    "START_DATE": "Date de début",
+    "END_DATE": "Date de fin",
+    "OPTIONAL": "optionnel",
+    "ALERT_BEFORE": "Alerte avant",
+    "DAYS": "Jours de la semaine",
+    "TIMES": "Heures de prise",
+    "ADD_TIME": "Ajouter une heure",
+    "UPCOMING_ALERTS": "Alertes à venir"
+  },
  
  
 
